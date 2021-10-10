@@ -9,7 +9,7 @@ import ray
 import ray as ray
 import requests
 from confluent_kafka.cimpl import Producer, Consumer, KafkaException, KafkaError, TopicPartition
-
+import model_utils
 from datetime import datetime
 import time
 
@@ -41,7 +41,7 @@ class EventConsumer(object):
     def __init__(self, my_id=1, list_of_partitions=[], request_topic='cc_events', result_topic='cc_inference',
                  group_id='my_grp'):
         ray.init()
-        json_file_path = os.path.join(os.getcwd(), "config/credentials.json")
+        json_file_path = os.path.join(model_utils.get_base_folder(), "config/credentials.json")
         with open(json_file_path, 'r') as j:
             creds = json.loads(j.read())
 

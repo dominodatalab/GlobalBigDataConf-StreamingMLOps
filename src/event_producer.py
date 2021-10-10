@@ -10,7 +10,7 @@ import json
 
 if __name__ == '__main__':
     topic = 'cc_events'
-    json_file_path = os.path.join(os.getcwd(),"config/credentials.json")
+    json_file_path = os.path.join(os.getcwd(), "../config/credentials.json")
 
     with open(json_file_path, 'r') as j:
         creds = json.loads(j.read())
@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     producer = Producer(conf)
     random.seed(1000)
-    original_ds_file = os.path.join(os.getcwd(),'raw_dataset','creditcard.csv')
+    original_ds_file = os.path.join(os.getcwd(), '../raw_dataset', 'creditcard.csv')
 
     i = 0
     while(True):

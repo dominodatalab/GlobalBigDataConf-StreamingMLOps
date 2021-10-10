@@ -1,4 +1,1 @@
-{"current_version": 0,
- "base_folder": "/Users/sameerwadkar/PycharmProjects/StreamingMLOps",
- "inf_truth_join_folder": "inf_truth_join_folder"
-}
+{"current_version": 1, "inf_truth_join_folder": "inf_truth_join_folder", "training_datasets_folder": "training_datasets", "dataset_file": "ds.csv"}

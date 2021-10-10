@@ -3,28 +3,10 @@ import json
 import sys
 import os
 
-from json import dumps, loads
+from json import loads
 
 import certifi
-import ray
-import ray as ray
-import requests
-from confluent_kafka.cimpl import Producer, Consumer, KafkaException, KafkaError, TopicPartition
-
-from datetime import datetime
-import time
-
-
-from river import datasets
-from river import evaluate
-from river import metrics
-from river import tree
-from river import anomaly
-from river import compose
-from river import preprocessing
-
-import numpy as np
-import pickle
+from confluent_kafka.cimpl import Consumer, KafkaException, KafkaError, TopicPartition
 
 import model_utils
 
@@ -32,7 +14,7 @@ import model_utils
 class InferenceAndTruthConsumer(object):
     def __init__(self, my_id=1, list_of_partitions=[], request_topic='cc_events', result_folder='/tmp/',
                  group_id='my_grp'):
-        json_file_path = os.path.join(os.getcwd(), "config/credentials.json")
+        json_file_path = os.path.join(model_utils.get_base_folder(), "config/credentials.json")
         with open(json_file_path, 'r') as j:
             creds = json.loads(j.read())
 
@@ -87,7 +69,7 @@ class InferenceAndTruthConsumer(object):
         my_msg.append(msg['Time'])
         for i in range(1,29):
             idx = 'V'+str(i)
-            my_msg.append(idx)
+            my_msg.append(msg[idx])
         my_msg.append(msg['Amount'])
         my_msg.append(msg['Class'])
         my_msg.append(msg['Result'])

@@ -4,9 +4,9 @@ import random
 from collections import deque
 if __name__ == '__main__':
     random.seed(1000)
-    original_ds_file = os.path.join(os.getcwd(),'raw_dataset','creditcard.csv')
-    destination_ds_folder = os.path.join(os.getcwd(),'training_datasets','v0')
-    ds_file = os.path.join(os.getcwd(),'training_datasets','v0','ds.csv')
+    original_ds_file = os.path.join(os.getcwd(), '../raw_dataset', 'creditcard.csv')
+    destination_ds_folder = os.path.join(os.getcwd(), '../training_datasets', 'v0')
+    ds_file = os.path.join(os.getcwd(), '../training_datasets', 'v0', 'ds.csv')
     if(not os.path.isdir(destination_ds_folder)):
         os.makedirs(destination_ds_folder)
     if(os.path.isfile(ds_file)):

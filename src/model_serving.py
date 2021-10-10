@@ -1,7 +1,4 @@
-import math
-
 import ray
-import requests
 from ray import serve
 import model_utils
 import time
