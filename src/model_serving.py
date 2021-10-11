@@ -57,7 +57,7 @@ class ModelServing:
     return await self.handle_batch(request)
 
 
-ray.init(num_cpus=8)
+ray.init(num_cpus=2)
 serve.start()
 ModelServing.deploy()
 print('Now waiting')

@@ -41,9 +41,10 @@ if __name__ == '__main__':
                 producer.produce(topic, value=v, key=k)
 
                 if(i%100==0):
-                    print('Flushing. Processed records ' + str(i))
                     producer.flush()
                     #time.sleep(10)
+                if(i%1000==0):
+                    print('Event Producer processed ' + str(i) + ' records')
                 producer.flush()
 
     producer.flush()
