@@ -9,6 +9,18 @@ def hello(request):
     name = request.query_params["name"]
     return f"Hello {name}!"
 
+@serve.deployment
+async def predict(request):
+    body = await request.json()
+    if('version' in request.query_params):
+        version = request.query_params["version"]
+        model = model_utils.get_model(version=version)
+        return model.score_one(body);
+    else:
+        model = model_utils.get_model()
+        result = model.score_one(body)
+        model.score_one(body)
+
 
 ray.init(num_cpus=1)
 serve.start()
