@@ -41,11 +41,11 @@ class ModelServing:
           if ('version' in body):
               version = body["version"]
               self.model = model_utils.get_model(version=version)
-              body["Result"] = str(self.model.score_one(features))
+              body["result"] = str(self.model.score_one(features))
               results.append(body)
           else:
               body["version"] = model_utils.get_current_model_version()
-              body["Result"] = str(self.model.score_one(features))
+              body["result"] = str(self.model.score_one(features))
           event_time = int(body["ingest_ts"])
           predict_time = time.time()
           body["prediction_ts"] = predict_time

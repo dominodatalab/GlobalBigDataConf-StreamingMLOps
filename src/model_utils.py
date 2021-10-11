@@ -19,7 +19,6 @@ def initialize_artifact_destination(folder,file):
 def get_model_metadata():
     f = open(os.path.join(get_base_folder(), 'config', 'model_metadata.json'))
     data = json.load(f)
-    print(data)
     return data
 
 def get_base_folder():
