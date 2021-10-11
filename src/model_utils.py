@@ -25,7 +25,7 @@ def get_base_folder():
     if(os.getenv('DOMINO_PROJECT_NAME') is not None):
         return '/mnt/data/'+os.getenv('DOMINO_PROJECT_NAME')+"/"
     else:
-        return os.getcwd() + "/../"
+        return "../"
 
 
 def get_current_model_version():
@@ -66,9 +66,7 @@ def increment_model_version():
 
 def get_model(version=None):
     model_metadata = get_model_metadata()
-    version = 0
-    if(version==None):
-        version = get_current_model_version()
+    version = get_current_model_version()
     if(version==-1):
         model = compose.Pipeline(
             preprocessing.MinMaxScaler(),
@@ -153,4 +151,4 @@ def get_original_ds_file():
     return os.path.join(get_base_folder(), 'raw_dataset', 'creditcard.csv')
 
 if __name__ == '__main__':
-    print(get_base_folder())
+    print(get_current_model_version())

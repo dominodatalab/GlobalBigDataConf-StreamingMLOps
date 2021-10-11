@@ -66,9 +66,7 @@ def increment_model_version():
 
 def get_model(version=None):
     model_metadata = get_model_metadata()
-    version = 0
-    if(version==None):
-        version = get_current_model_version()
+    version = get_current_model_version()
     if(version==-1):
         model = compose.Pipeline(
             preprocessing.MinMaxScaler(),
