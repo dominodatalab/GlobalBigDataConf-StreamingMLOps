@@ -38,7 +38,7 @@ def train_model():
             model = model.learn_one(x)
             y = row[31]
             metric.update(int(y),  round(model.score_one(x)))
-            if(i%100==0):
+            if(i%10000==0):
                 print(str(i) + "=" + str(metric.get()))
     print(str(metric.get()))
     pickle.dump(model, open(model_file, "wb"))
