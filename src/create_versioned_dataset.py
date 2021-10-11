@@ -1,7 +1,8 @@
 import os
 import model_utils
 import fileinput
-if __name__ == '__main__':
+
+def create_ds():
     inf_truth_join_folder = model_utils.get_inf_truth_join_folder()
     files = os.listdir(inf_truth_join_folder)
     inp_files = []
@@ -15,3 +16,6 @@ if __name__ == '__main__':
                 ds_file.write(line)
     for f in inp_files:
         os.remove(f)
+
+if __name__ == '__main__':
+    create_ds()

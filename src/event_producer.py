@@ -6,28 +6,15 @@ from confluent_kafka import Producer, SerializingProducer
 import csv
 import time
 import json
-
-
+import model_utils
+EVENT_TOPIC='cc_events'
 if __name__ == '__main__':
-    topic = 'cc_events'
-    json_file_path = os.path.join(os.getcwd(), "../config/credentials.json")
-
-    with open(json_file_path, 'r') as j:
-        creds = json.loads(j.read())
-
-    conf = {'bootstrap.servers': creds['BOOTSTRAP_SERVERS'],
-            'sasl.mechanism': 'PLAIN',
-            'security.protocol': 'SASL_SSL',
-            'ssl.ca.location': certifi.where(),
-            'sasl.username': creds['CLUSTER_API_KEY'],
-            'sasl.password': creds['CLUSTER_API_SECRET'],
-            #'key.serializer': StringSerializer('utf_8'),
-            #'value.serializer': StringSerializer('utf_8'),
-            'client.id': 'test-sw-1'}
-
-    producer = Producer(conf)
+    topic = EVENT_TOPIC
     random.seed(1000)
-    original_ds_file = os.path.join(os.getcwd(), '../raw_dataset', 'creditcard.csv')
+    producer = model_utils.get_kafka_producer('test-sw-1')
+
+
+    original_ds_file = model_utils.get_original_ds_file()
 
     i = 0
     while(True):
@@ -45,7 +32,7 @@ if __name__ == '__main__':
                 rows['account_number'] =account_number
                 rows['Time'] = t
                 rows['message_id'] = i
-                rows['ingestTs'] = t
+                rows['ingest_ts'] = t
 
 
                 k = str(i);
