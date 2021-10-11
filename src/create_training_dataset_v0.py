@@ -3,7 +3,8 @@ import os
 import random
 from collections import deque
 import model_utils
-if __name__ == '__main__':
+
+def create_v0_ds():
     random.seed(1000)
     original_ds_file = model_utils.get_raw_dataset_file()
     ds_fldr = model_utils.create_if_not_exists_dataset_version_folder(0)
@@ -20,3 +21,6 @@ if __name__ == '__main__':
                 row = deque(row)
                 row.appendleft(account_number)
                 csv_writer.writerow(row)
+                
+if __name__ == '__main__':
+    create_v0_ds()

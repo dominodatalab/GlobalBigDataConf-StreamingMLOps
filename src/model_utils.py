@@ -22,8 +22,8 @@ def get_model_metadata():
     return data
 
 def get_base_folder():
-    if(os.getenv(DOMINO_PROJECT_NAME) is not None):
-        return '/mnt/data/'+os.getenv(DOMINO_PROJECT_NAME)+"/"
+    if(os.getenv('DOMINO_PROJECT_NAME') is not None):
+        return '/mnt/data/'+os.getenv('DOMINO_PROJECT_NAME')+"/"
     else:
         return "../"
 
