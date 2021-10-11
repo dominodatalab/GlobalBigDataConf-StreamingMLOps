@@ -65,7 +65,7 @@ def increment_model_version():
     return data['current_version']
 
 def get_model(version=None):
-    model_metadata = get_model_metadata()
+    config = get_model_metadata()
     version = get_current_model_version()
     if(version==-1):
         model = compose.Pipeline(
@@ -77,12 +77,12 @@ def get_model(version=None):
         base_folder = get_base_folder()
         if (base_folder==''):
             base_folder = os.getcwd()
-        models_path = os.path.join(base_folder, 'models', 'v' + str(version), 'model.pkl')
+        models_path = os.path.join(base_folder, config['models_folder'], 'v' + str(version), 'model.pkl')
         with (open(models_path, "rb")) as f:
             return pickle.load(f)
 
 def get_metric(name,version=None):
-
+    config = get_model_metadata()
     if(version==None):
         version = get_current_model_version()
     print(version)
@@ -98,7 +98,7 @@ def get_metric(name,version=None):
         base_folder = get_base_folder()
         if (base_folder==''):
             base_folder = os.getcwd()
-        metrics_path = os.path.join(base_folder, 'models', 'v' + str(version),name+'.pkl')
+        metrics_path = os.path.join(base_folder, config['models_folder'], 'v' + str(version),name+'.pkl')
         with (open(metrics_path, "rb")) as f:
             return pickle.load(f)
 
