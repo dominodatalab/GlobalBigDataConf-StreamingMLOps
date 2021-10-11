@@ -65,7 +65,6 @@ def increment_model_version():
     return data['current_version']
 
 def get_model(version=None):
-    model_metadata = get_model_metadata()
     config = get_model_metadata()
     version = get_current_model_version()
     if(version==-1):
