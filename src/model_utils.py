@@ -56,7 +56,7 @@ def get_next_model_version():
 
 def increment_model_version():
     path = os.path.join(get_base_folder(), 'config', 'model_metadata.json')
-    data={}
+
     with open(path,'r') as f:
         data = json.load(f)
     with open(path, 'w') as f:
@@ -111,10 +111,21 @@ def get_inf_truth_join_folder():
     config = get_model_metadata()
     return os.path.join(get_base_folder(),config['inf_truth_join_folder'])
 
-def get_kafka_consumer(group_id, topic, partitions,offset='latest'):
+def get_kafka_credentials():
     json_file_path = os.path.join(get_base_folder(), "config/credentials.json")
-    with open(json_file_path, 'r') as j:
-        creds = json.loads(j.read())
+    if(os.path.isfile(json_file_path)):
+        with open(json_file_path, 'r') as j:
+            creds = json.loads(j.read())
+        return creds
+    else:
+        creds = {}
+        creds['BOOTSTRAP_SERVERS'] = os.getenv('BOOTSTRAP_SERVERS')
+        creds['CLUSTER_API_KEY'] = os.getenv('CLUSTER_API_KEY')
+        creds['CLUSTER_API_SECRET'] = os.getenv('CLUSTER_API_SECRET')
+        return creds
+
+def get_kafka_consumer(group_id, topic, partitions,offset='latest'):
+    creds = get_kafka_credentials()
     tls = []
     for p in partitions:
         tls.append(TopicPartition(topic, p))
@@ -133,9 +144,7 @@ def get_kafka_consumer(group_id, topic, partitions,offset='latest'):
 
 
 def get_kafka_producer(client_id):
-    json_file_path = os.path.join(get_base_folder(), "config/credentials.json")
-    with open(json_file_path, 'r') as j:
-        creds = json.loads(j.read())
+    creds = get_kafka_credentials()
     conf = {'bootstrap.servers': creds['BOOTSTRAP_SERVERS'],
             'sasl.mechanism': 'PLAIN',
             'security.protocol': 'SASL_SSL',
