@@ -2,17 +2,12 @@ import csv
 import os
 import random
 from collections import deque
+import model_utils
 if __name__ == '__main__':
     random.seed(1000)
-    original_ds_file = os.path.join(os.getcwd(), '../raw_dataset', 'creditcard.csv')
-    destination_ds_folder = os.path.join(os.getcwd(), '../training_datasets', 'v0')
-    ds_file = os.path.join(os.getcwd(), '../training_datasets', 'v0', 'ds.csv')
-    if(not os.path.isdir(destination_ds_folder)):
-        os.makedirs(destination_ds_folder)
-    if(os.path.isfile(ds_file)):
-        os.remove(ds_file)
-    with open(ds_file, 'w') as fp:
-        pass
+    original_ds_file = model_utils.get_raw_dataset_file()
+    ds_fldr = model_utils.create_if_not_exists_dataset_version_folder(0)
+    ds_file = os.path.join(ds_fldr,model_utils.get_model_metadata()['dataset_file'])
 
 
     with open(original_ds_file, 'r') as cc_file:

@@ -31,9 +31,20 @@ def get_base_folder():
 def get_current_model_version():
     return get_model_metadata()['current_version']
 
+def get_raw_dataset_file():
+    original_ds_file = os.path.join(get_base_folder(), 'raw_dataset', 'creditcard.csv')
+    return original_ds_file
+
 def create_if_not_exists_dataset_next_version_folder():
     config = get_model_metadata()
     fldr = os.path.join(get_base_folder(), config['training_datasets_folder'],'v'+str(config['current_version']+1))
+    if (not os.path.isdir(fldr)):
+        os.makedirs(fldr)
+    return fldr
+
+def create_if_not_exists_dataset_version_folder(version):
+    config = get_model_metadata()
+    fldr = os.path.join(get_base_folder(), config['training_datasets_folder'],'v'+str(version))
     if (not os.path.isdir(fldr)):
         os.makedirs(fldr)
     return fldr
