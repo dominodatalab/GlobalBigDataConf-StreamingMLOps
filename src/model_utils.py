@@ -85,7 +85,6 @@ def get_metric(name,version=None):
     config = get_model_metadata()
     if(version==None):
         version = get_current_model_version()
-    print(version)
     if(version==-1):
         if(name=='ROCAUC'):
             metric = metrics.ROCAUC()
