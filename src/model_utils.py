@@ -25,7 +25,7 @@ def get_base_folder():
     if(os.getenv('DOMINO_PROJECT_NAME') is not None):
         return '/mnt/data/'+os.getenv('DOMINO_PROJECT_NAME')+"/"
     else:
-        return "../"
+        return os.getcwd() + "/../"
 
 
 def get_current_model_version():
@@ -153,4 +153,4 @@ def get_original_ds_file():
     return os.path.join(get_base_folder(), 'raw_dataset', 'creditcard.csv')
 
 if __name__ == '__main__':
-    print(get_current_model_version())
+    print(get_base_folder())
