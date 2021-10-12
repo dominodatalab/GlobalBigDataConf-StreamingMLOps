@@ -42,7 +42,6 @@ class ModelServing:
               version = body["version"]
               self.model = model_utils.get_model(version=version)
               body["result"] = str(self.model.score_one(features))
-              results.append(body)
           else:
               body["version"] = model_utils.get_current_model_version()
               body["result"] = str(self.model.score_one(features))

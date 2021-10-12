@@ -3,4 +3,3 @@ ray~=1.6.0
 certifi~=2021.5.30
 requests~=2.25.1
 numpy~=1.21.2
-
