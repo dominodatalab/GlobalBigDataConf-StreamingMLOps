@@ -25,7 +25,7 @@ def get_base_folder():
     if(os.getenv('DOMINO_PROJECT_NAME') is not None):
         return '/mnt/data/'+os.getenv('DOMINO_PROJECT_NAME')+"/"+os.getenv('DOMINO_STARTING_USERNAME')+"/"
     else:
-        return "../"
+        return os.getcwd()
 
 
 def get_current_model_version():
