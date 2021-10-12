@@ -3,7 +3,6 @@ import random
 
 def predict(msg):
     features = model_utils.get_features(msg)
-    features = model_utils.get_features(msg)
     if ('version' not in msg):
         msg["version"] = model_utils.get_current_model_version()
     version = msg["version"]
