@@ -8,12 +8,14 @@ from river import preprocessing
 import pickle
 import model_utils
 from create_versioned_dataset import create_ds
+import json
 
 def train_model():
-    metric = model_utils.get_metric('ROCAUC')
+    metric = model_utils.get_metric('rocauc')
     model = model_utils.get_model()
     next_version = model_utils.get_next_model_version()
     if(int(next_version)>0):
+        print('creating training dataset version ' + str(next_version))
         create_ds()
     '''
     model = compose.Pipeline(
@@ -26,7 +28,8 @@ def train_model():
     model_file = os.path.join(model_utils.get_base_folder(), 'models', 'v'+str(next_version), 'model.pkl')
     metric_rocauc_file = os.path.join(model_utils.get_base_folder(), 'models', 'v' + str(next_version), 'rocauc.pkl')
     model_utils.initialize_artifact_destination(model_folder, model_file)
-
+    total_prediction_latency = 0
+    print('start training version ' + str(next_version))
     with open(ds_file, 'r') as cc_file:
         csv_reader = csv.reader(cc_file)
         i=0
@@ -40,10 +43,24 @@ def train_model():
             metric.update(int(y),  round(model.score_one(x)))
             if(i%10000==0):
                 print(str(i) + "=" + str(metric.get()))
+            if(int(next_version)>0):
+                total_prediction_latency=total_prediction_latency+float(row[len(row)-1])
     print(str(metric.get()))
     pickle.dump(model, open(model_file, "wb"))
     pickle.dump(metric, open(metric_rocauc_file, "wb"))
+    stats = {}
+    stats['rocauc']=metric.get()
+    if(i==0):
+        i=1
+    stats['avg_prediction_latency']=total_prediction_latency/i
+    with open('./dominostats.json','w') as f:
+        json.dump(stats, f)
+
+    
+    
     model_utils.increment_model_version()
+    
+    
     topic = 'cc_control'
     producer = model_utils.get_kafka_producer('test-sw-1')
     current_version = str(model_utils.get_current_model_version())
@@ -52,6 +69,5 @@ def train_model():
     print('Publish model update')
     #self.consumer = model_utils.get_kafka_consumer('model-training', request_topic, list_of_partitions, 'latest')
     #Produce message
-    
 if __name__ == '__main__':
     train_model()
