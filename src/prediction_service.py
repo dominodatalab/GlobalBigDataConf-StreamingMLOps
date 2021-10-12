@@ -1,5 +1,3 @@
-import ray
-
 from src import model_utils
 import random
 
