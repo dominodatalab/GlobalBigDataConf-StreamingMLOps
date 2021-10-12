@@ -1,8 +1,9 @@
 from src import model_utils
 import random
-
+import os
 def predict(msg):
-    features = model_utils.get_features(msg)
+    os.environ["DOMINO_PROJECT_NAME"] = msg["MODEL_REGISTRY_ROOT"]
+    os.environ["DOMINO_STARTING_USERNAME"] = msg["MODEL_REGISTRY_USER"]
     features = model_utils.get_features(msg)
     if ('version' not in msg):
         msg["version"] = model_utils.get_current_model_version()
