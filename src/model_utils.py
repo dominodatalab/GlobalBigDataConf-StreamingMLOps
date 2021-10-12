@@ -80,17 +80,9 @@ def get_model(version=None):
         with (open(models_path, "rb")) as f:
             return pickle.load(f)
 
-import boto3
-from io import BytesIO
-def get_model_s3(bucket_name,folder_name,version=None):
-    session = boto3.Session()
-    s3_client = session.client("s3")
-    f = BytesIO()
-    s3_client.download_fileobj(bucket_name, folder_name + 'models' + 'v'+str(version), f)
-    f.seek(0)
-    with(open('/tmp/v'+str('0'))) as f:
-        f.write(f.getvalue())
-    with (open('/tmp/v'+str('0'), "rb")) as f:
+def get_model_local(version=None):
+    path = os.path.join('/mnt/code/models/', 'v' + str(version), 'model.pkl')
+    with (open(path, "rb")) as f:
         return pickle.load(f)
 
 

@@ -25,8 +25,7 @@ def get_base_folder():
     if(os.getenv('DOMINO_PROJECT_NAME') is not None):
         return '/mnt/data/'+os.getenv('DOMINO_PROJECT_NAME')+"/"+os.getenv('DOMINO_STARTING_USERNAME')+"/"
     else:
-        return "../"
-
+        return os.getcwd()
 
 def get_current_model_version():
     return get_model_metadata()['current_version']
@@ -80,6 +79,12 @@ def get_model(version=None):
         models_path = os.path.join(base_folder, config['models_folder'], 'v' + str(version), 'model.pkl')
         with (open(models_path, "rb")) as f:
             return pickle.load(f)
+
+def get_model_local(version=None):
+    path = os.path.join('/mnt/code/models/', 'v' + str(version), 'model.pkl')
+    with (open(path, "rb")) as f:
+        return pickle.load(f)
+
 
 def get_metric(name,version=None):
     config = get_model_metadata()
