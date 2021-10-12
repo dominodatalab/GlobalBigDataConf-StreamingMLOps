@@ -1,4 +1,4 @@
-import model_utils
+import src/model_utils
 import random
 import os
 
