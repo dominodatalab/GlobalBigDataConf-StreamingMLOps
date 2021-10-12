@@ -1,9 +1,22 @@
 from src import model_utils
 import random
 import os
+import boto3
+
 def predict(msg):
+    os.environ["DOMINO_S3_BUCKET"] = msg["DOMINO_S3_BUCKET"]
     os.environ["DOMINO_PROJECT_NAME"] = msg["MODEL_REGISTRY_ROOT"]
     os.environ["DOMINO_STARTING_USERNAME"] = msg["MODEL_REGISTRY_USER"]
+
+    objs = boto3.client.list_objects(Bucket=msg["DOMINO_S3_BUCKET"])
+    while 'Contents' in objs.keys():
+        objs_contents = objs['Contents']
+        for i in range(len(objs_contents)):
+            filename = objs_contents[i]['Key']
+
+    with (open(models_path, "rb")) as f:
+        return pickle.load(f)
+
     features = model_utils.get_features(msg)
     if ('version' not in msg):
         msg["version"] = model_utils.get_current_model_version()

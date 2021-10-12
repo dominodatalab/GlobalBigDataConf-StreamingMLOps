@@ -27,7 +27,6 @@ def get_base_folder():
     else:
         return os.getcwd()
 
-
 def get_current_model_version():
     return get_model_metadata()['current_version']
 
@@ -80,6 +79,20 @@ def get_model(version=None):
         models_path = os.path.join(base_folder, config['models_folder'], 'v' + str(version), 'model.pkl')
         with (open(models_path, "rb")) as f:
             return pickle.load(f)
+
+import boto3
+from io import BytesIO
+def get_model_s3(bucket_name,folder_name,version=None):
+    session = boto3.Session()
+    s3_client = session.client("s3")
+    f = BytesIO()
+    s3_client.download_fileobj(bucket_name, folder_name + 'models' + 'v'+str(version), f)
+    f.seek(0)
+    with(open('/tmp/v'+str('0'))) as f:
+        f.write(f.getvalue())
+    with (open('/tmp/v'+str('0'), "rb")) as f:
+        return pickle.load(f)
+
 
 def get_metric(name,version=None):
     config = get_model_metadata()
