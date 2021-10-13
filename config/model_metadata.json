@@ -1,1 +1,2 @@
-{"current_version": 3, "models_folder": "models","inf_truth_join_folder": "inf_truth_join_folder", "training_datasets_folder": "training_datasets", "dataset_file": "ds.csv"}
+{"current_version": 3, "models_folder": "models","inf_truth_join_folder": "inf_truth_join_folder", "training_datasets_folder": "training_datasets", "dataset_file": "ds.csv"
+}

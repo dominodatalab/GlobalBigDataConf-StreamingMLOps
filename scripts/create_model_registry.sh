@@ -1,9 +1,12 @@
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/config
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/models
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/raw_datasets
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/training_datasets
-mkdir /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/inf_truth_join_folder
+echo $1
+rm -rf $1
+mkdir -R $1
 
+mkdir $1/config
+mkdir $1/models
+mkdir $1raw_datasets
+mkdir $1/training_datasets
+mkdir $1/inf_truth_join_folder
+cp /mnt/data/bigdata-conference-streamingml/sameer_wadkar/raw_dataset/creditcard.csv /mnt/data/my_model_registry/raw_datasets/
 
-cp ./config/model_metadata_initial.json /mnt/data/$(DOMINO_PROJECT_NAME)/$(DOMINO_STARTING_USERNAME)/config/model_metadata.json
+cp ./config/model_metadata_initial.json $1/config/model_metadata.json
