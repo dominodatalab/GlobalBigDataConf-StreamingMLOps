@@ -92,7 +92,11 @@ class EventConsumer(object):
 
 
 if __name__ == '__main__':
-    list_of_partitions = [0,1,2,3,4,5]
+    #Default topic has 6 partitions
+    list_of_partitions = [0, 1, 2, 3, 4, 5]
+    if(len(sys.argv)>1):
+        list_of_partitions = [int(p) for p in sys.argv[1:]]
+    print("Processing partitions " + ','.join([str(p) for p in list_of_partitions]))
     src_topic = 'cc_events'
     dest_topic = 'cc_prediction_truth_join'
     grp_id = 'cc-grp-1'
