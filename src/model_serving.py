@@ -55,11 +55,11 @@ class ModelServing:
   async def __call__(self, request):
     return await self.handle_batch(request)
 
-
-ray.init(num_cpus=2)
-serve.start()
-ModelServing.deploy()
-print('Now waiting')
-time.sleep(10000)
+if __name__ == '__main__':
+    ray.init(num_cpus=2)
+    serve.start()
+    ModelServing.deploy()
+    print('Now waiting')
+    time.sleep(10000)
 
 
