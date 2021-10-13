@@ -81,5 +81,3 @@ response = requests.post('http://127.0.0.1:8000/predict', json=data)
 print(response.status_code)
 print(response.text)
 ```
-Reach out to sameer_wadkar@dominodatalab.com if you have any questions
-
