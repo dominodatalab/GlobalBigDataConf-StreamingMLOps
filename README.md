@@ -1,6 +1,12 @@
 ##Introduction
 This repo was created as a part of my presentation at the Global Artificial Intelligence Virtual Conference
-The presentation is available in this repo at [docs/StreamingMLOps.pdf](docs/StreamingMLOps.pdf) 
+The presentation is available in this repo at [docs/StreamingMLOps.pdf](docs/StreamingMLOps.pdf)
+
+The use-case is credit card fraud detections based on an Unsupervised Learning based Anomaly Detection algorithm
+[Half Space Trees](https://www.ijcai.org/Proceedings/11/Papers/254.pdf)
+
+Additional context around the ML methodology can be found at this [link](https://github.com/dominodatalab/streaming-online-learning) 
+
 ### Versions
 Python 3.8
 Check for library dependencies in the ./requirements.txt file
@@ -31,8 +37,9 @@ numpy~=1.21.2
 4. Start the inference generator. This listens to the `cc_events` topic and publishes the inferences to the topic `cc_prediction_truth_join`. Again we have conveniently published by the inference and the prediction to this topic. Typically they will need to be joined because the ground truth arrives later. We start two of these instances listening to separate kakfa partitions 
 `python src/predict_on_a_stream.py 0 1 2` and `python src/predict_on_a_stream.py 3 4 5` 
 5. Now start the `python inference_and_truth_join_consumer.py 5` where `0` is an <id> we provide this consumer. We can have upto 6 consumers (6 paritions on the source topic) like this. Give each a unique id.   which writes the results to the shared folder in the model_registry setup `inf_truth_join_folder`
-6. Now you can periodically re-run the model training on schedule or manually as `python model_training.py`. This will consolidate all the files from the `inf_truth_join_folder` in a versioned (current_version+1) folder inside `training_datasets` folder and the the model training will create a new version of the model and metrics 
-7. You can also test the endpoint using any REST client
+6. Now you can periodically re-run the model training on schedule or manually as `python model_training.py`. This will consolidate all the files from the `inf_truth_join_folder` in a versioned (current_version+1) folder inside `training_datasets` folder and the the model training will create a new version of the model and metrics
+7. Everytime the model version is incremented a message is sent to the `cc_control` topic and the REST endpoints update the underlying model they are serving
+8. You can also test the endpoint using any REST client
 ```
 
 import requests
