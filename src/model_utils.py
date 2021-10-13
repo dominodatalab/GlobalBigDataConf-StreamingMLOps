@@ -16,6 +16,14 @@ def initialize_artifact_destination(folder,file):
     if(os.path.isfile(file)):
         os.remove(file)
 
+def get_metrics_history():
+    results = []
+    version = get_current_model_version()
+    for v in range(0, version + 1):
+        metric = get_metric('rocauc',v)
+        results.append({"version":v, "rocauc":metric.get()})
+    return results
+
 def get_model_metadata():
     f = open(os.path.join(get_base_folder(), 'config', 'model_metadata.json'))
     data = json.load(f)
