@@ -10,3 +10,4 @@ training_datasets/v0/ds.csv
 *.pyc
 *.iml
 .idea/*
+/.ipynb_checkpoints/
